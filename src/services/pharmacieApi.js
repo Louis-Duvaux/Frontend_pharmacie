@@ -37,6 +37,7 @@ export async function getMedicament(reference) {
  * @returns {Promise<Object>}
  */
 export async function createMedicament(medicament) {
+    console.log('CREATE MEDICAMENT BODY:', JSON.stringify(medicament))
     const response = await fetch(`${BASE_URL}/medicaments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -44,6 +45,7 @@ export async function createMedicament(medicament) {
     })
     if (!response.ok) {
         const errorText = await response.text().catch(() => '')
+        console.log('ERREUR COMPLÈTE:', response.status, errorText)
         throw new Error(`Erreur ${response.status} : ${errorText || 'création impossible'}`)
     }
     return response.json()

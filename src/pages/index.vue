@@ -160,14 +160,23 @@
   }
 
   async function handleSave (formData, isEditing) {
+    console.log('HANDLE SAVE CALLED', JSON.stringify(formData), 'isEditing:', isEditing)
     saving.value = true
     try {
-      // Nettoyer les champs HAL et ajouter la catégorie par défaut
-      const { _links, _embedded, ...cleaned } = formData
+      // Construire un payload propre avec uniquement les champs attendus
       const payload = {
-        ...cleaned,
+        nom: formData.nom,
+        quantiteParUnite: formData.quantiteParUnite,
+        prixUnitaire: formData.prixUnitaire,
+        unitesEnStock: formData.unitesEnStock,
+        unitesCommandees: formData.unitesCommandees || 0,
+        niveauDeReappro: formData.niveauDeReappro,
+        fournisseur: formData.fournisseur,
+        indisponible: formData.indisponible || false,
+        imageURL: formData.imageURL || '',
         categorie: 'https://springajax.herokuapp.com/api/categories/1',
       }
+      console.log('PAYLOAD ENVOYÉ:', JSON.stringify(payload))
 
       if (isEditing) {
         await updateMedicament(formData.reference, payload)

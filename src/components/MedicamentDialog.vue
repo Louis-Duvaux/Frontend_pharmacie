@@ -148,6 +148,7 @@
   }
 
   function submit () {
+    console.log('SUBMIT CLICKED', JSON.stringify(form.value))
     emit('save', { ...form.value }, isEditing.value)
   }
 </script>
