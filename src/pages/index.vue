@@ -162,16 +162,17 @@
   async function handleSave (formData, isEditing) {
     saving.value = true
     try {
+      // Extraire categorieCode et les champs HAL, garder uniquement les données métier
+      const { categorieCode, _links, _embedded, ...rest } = formData
+      const payload = {
+        ...rest,
+        categorie: `https://springajax.herokuapp.com/api/categories/${categorieCode}`,
+      }
+
       if (isEditing) {
-        await updateMedicament(formData.reference, formData)
+        await updateMedicament(formData.reference, payload)
         notify('Médicament modifié avec succès !')
       } else {
-        // Construire le payload avec le lien catégorie pour Spring Data REST
-        const { categorieCode, ...rest } = formData
-        const payload = {
-          ...rest,
-          categorie: `https://springajax.herokuapp.com/api/categories/${categorieCode}`,
-        }
         await createMedicament(payload)
         notify('Médicament ajouté avec succès !')
       }
