@@ -162,8 +162,12 @@
   async function handleSave (formData, isEditing) {
     saving.value = true
     try {
-      // Nettoyer les champs HAL avant l'envoi
-      const { _links, _embedded, ...payload } = formData
+      // Nettoyer les champs HAL et ajouter la catégorie par défaut
+      const { _links, _embedded, ...cleaned } = formData
+      const payload = {
+        ...cleaned,
+        categorie: 'https://springajax.herokuapp.com/api/categories/1',
+      }
 
       if (isEditing) {
         await updateMedicament(formData.reference, payload)

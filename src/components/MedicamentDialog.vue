@@ -84,7 +84,6 @@
         <v-spacer />
         <v-btn
           color="primary"
-          :disabled="!formValid"
           :loading="loading"
           @click="submit"
         >
