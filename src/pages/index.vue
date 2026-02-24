@@ -4,7 +4,7 @@
     <v-row align="center" class="mb-4">
       <v-col>
         <h1 class="text-h5 text-primary">Stock de médicaments</h1>
-        <p class="text-body-2 text-grey">{{ pageInfo.totalElements ?? 0 }} médicament(s)</p>
+        <p class="text-body-2 text-grey">{{ totalElements }} médicament(s)</p>
       </v-col>
       <v-col cols="auto">
         <v-btn color="primary" @click="openAddDialog">Ajouter</v-btn>
@@ -56,15 +56,7 @@
       </v-col>
     </v-row>
 
-    <!-- Pagination -->
-    <v-row v-if="pageInfo.totalPages > 1" justify="center" class="mt-4">
-      <v-pagination
-        v-model="currentPage"
-        :length="pageInfo.totalPages"
-        :total-visible="7"
-        color="primary"
-      />
-    </v-row>
+
 
     <!-- Dialogue ajouter / modifier -->
     <MedicamentDialog
@@ -115,9 +107,7 @@
   } from '@/services/pharmacieApi'
 
   const medicaments = ref([])
-  const pageInfo = ref({ totalElements: 0, totalPages: 0 })
-  const currentPage = ref(1)
-  const itemsPerPage = ref(12)
+  const totalElements = ref(0)
   const searchQuery = ref('')
   const loading = ref(false)
 
@@ -139,12 +129,9 @@
   async function loadMedicaments () {
     loading.value = true
     try {
-      const { medicaments: data, page } = await getMedicaments(
-        currentPage.value - 1,
-        itemsPerPage.value
-      )
+      const { medicaments: data, page } = await getMedicaments(0, 1000)
       medicaments.value = data
-      pageInfo.value = page
+      totalElements.value = page.totalElements
     } catch (error) {
       notify(error.message, 'error')
     } finally {
@@ -233,12 +220,6 @@
       notify(error.message, 'error')
     }
   }
-
-  watch(currentPage, loadMedicaments)
-  watch(itemsPerPage, () => {
-    currentPage.value = 1
-    loadMedicaments()
-  })
 
   onMounted(loadMedicaments)
 </script>
