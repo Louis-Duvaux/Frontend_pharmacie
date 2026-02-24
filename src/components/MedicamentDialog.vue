@@ -163,6 +163,11 @@
   watch(() => props.modelValue, open => {
     if (open && props.medicament) {
       form.value = { ...props.medicament }
+      // Extraire le code catégorie depuis le lien HAL _links.categorie.href
+      if (props.medicament._links?.categorie?.href) {
+        const parts = props.medicament._links.categorie.href.split('/')
+        form.value.categorieCode = Number(parts[parts.length - 1])
+      }
     } else if (open) {
       form.value = defaultForm()
     }
