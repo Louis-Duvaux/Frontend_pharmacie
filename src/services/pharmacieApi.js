@@ -42,7 +42,10 @@ export async function createMedicament(medicament) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(medicament),
     })
-    if (!response.ok) throw new Error('Erreur lors de la création du médicament')
+    if (!response.ok) {
+        const errorText = await response.text().catch(() => '')
+        throw new Error(`Erreur ${response.status} : ${errorText || 'création impossible'}`)
+    }
     return response.json()
 }
 

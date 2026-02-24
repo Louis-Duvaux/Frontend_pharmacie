@@ -132,7 +132,7 @@
 
   const rules = {
     required: v => !!v || v === 0 || 'Ce champ est obligatoire',
-    positive: v => v > 0 || 'Doit être supérieur à 0',
+    positive: v => v >= 0 || 'Doit être positif',
     zeroOrPositive: v => v >= 0 || 'Doit être positif ou nul',
   }
 
