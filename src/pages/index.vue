@@ -164,15 +164,21 @@
     try {
       if (isEditing) {
         await updateMedicament(formData.reference, formData)
-        alert('Médicament modifié avec succès !')
+        notify('Médicament modifié avec succès !')
       } else {
-        await createMedicament(formData)
-        alert('Médicament ajouté avec succès !')
+        // Construire le payload avec le lien catégorie pour Spring Data REST
+        const { categorieCode, ...rest } = formData
+        const payload = {
+          ...rest,
+          categorie: `https://springajax.herokuapp.com/api/categories/${categorieCode}`,
+        }
+        await createMedicament(payload)
+        notify('Médicament ajouté avec succès !')
       }
       dialogOpen.value = false
       await loadMedicaments()
     } catch (error) {
-      alert('ERREUR : ' + error.message)
+      notify('Erreur : ' + error.message, 'error')
     } finally {
       saving.value = false
     }
