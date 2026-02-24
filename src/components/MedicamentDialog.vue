@@ -64,17 +64,6 @@
             class="mb-2"
           />
 
-          <v-select
-            v-model="form.categorieCode"
-            :items="categories"
-            item-title="libelle"
-            item-value="code"
-            label="Catégorie"
-            :rules="[rules.required]"
-            variant="outlined"
-            class="mb-2"
-          />
-
           <v-text-field
             v-model="form.imageURL"
             label="URL de l'image"
@@ -107,8 +96,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, watch, onMounted } from 'vue'
-  import { getCategories } from '@/services/pharmacieApi'
+  import { ref, computed, watch } from 'vue'
 
   const props = defineProps({
     modelValue: { type: Boolean, default: false },
@@ -120,7 +108,6 @@
 
   const formRef = ref(null)
   const formValid = ref(false)
-  const categories = ref([])
 
   const visible = computed({
     get: () => props.modelValue,
@@ -139,20 +126,9 @@
     fournisseur: 1,
     indisponible: false,
     imageURL: '',
-    categorieCode: null,
   })
 
   const form = ref(defaultForm())
-
-  async function loadCategories () {
-    try {
-      categories.value = await getCategories()
-    } catch (e) {
-      console.error('Impossible de charger les catégories', e)
-    }
-  }
-
-  onMounted(loadCategories)
 
   const rules = {
     required: v => !!v || v === 0 || 'Ce champ est obligatoire',
@@ -163,11 +139,6 @@
   watch(() => props.modelValue, open => {
     if (open && props.medicament) {
       form.value = { ...props.medicament }
-      // Extraire le code catégorie depuis le lien HAL _links.categorie.href
-      if (props.medicament._links?.categorie?.href) {
-        const parts = props.medicament._links.categorie.href.split('/')
-        form.value.categorieCode = Number(parts[parts.length - 1])
-      }
     } else if (open) {
       form.value = defaultForm()
     }

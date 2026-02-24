@@ -162,12 +162,8 @@
   async function handleSave (formData, isEditing) {
     saving.value = true
     try {
-      // Extraire categorieCode et les champs HAL, garder uniquement les données métier
-      const { categorieCode, _links, _embedded, ...rest } = formData
-      const payload = {
-        ...rest,
-        categorie: `https://springajax.herokuapp.com/api/categories/${categorieCode}`,
-      }
+      // Nettoyer les champs HAL avant l'envoi
+      const { _links, _embedded, ...payload } = formData
 
       if (isEditing) {
         await updateMedicament(formData.reference, payload)
