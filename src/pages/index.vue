@@ -22,15 +22,6 @@
           hide-details
         />
       </v-col>
-      <v-col cols="12" md="3">
-        <v-select
-          v-model="itemsPerPage"
-          :items="[12, 24, 48, 100]"
-          label="Par page"
-          variant="outlined"
-          hide-details
-        />
-      </v-col>
     </v-row>
 
     <!-- Chargement -->
