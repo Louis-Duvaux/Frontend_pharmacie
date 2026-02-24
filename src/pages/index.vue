@@ -164,15 +164,15 @@
     try {
       if (isEditing) {
         await updateMedicament(formData.reference, formData)
-        notify(`${formData.nom} modifié avec succès`)
+        alert('Médicament modifié avec succès !')
       } else {
         await createMedicament(formData)
-        notify(`${formData.nom} ajouté avec succès`)
+        alert('Médicament ajouté avec succès !')
       }
       dialogOpen.value = false
       await loadMedicaments()
     } catch (error) {
-      notify(error.message, 'error')
+      alert('ERREUR : ' + error.message)
     } finally {
       saving.value = false
     }
