@@ -3,8 +3,7 @@
  * Utilise l'API REST Spring Data : https://springajax.herokuapp.com/api
  */
 
-const BASE_URL = 'https://pharmacie-backend-4f71.onrender.com/api'
-
+const BASE_URL = 'https://springajax.herokuapp.com/api'
 /**
  * Récupère la liste des médicaments (paginée).
  * @param {number} page - Numéro de page (0-indexed)
