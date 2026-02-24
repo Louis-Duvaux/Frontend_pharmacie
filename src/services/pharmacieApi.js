@@ -37,15 +37,16 @@ export async function getMedicament(reference) {
  * @returns {Promise<Object>}
  */
 export async function createMedicament(medicament) {
-    console.log('CREATE MEDICAMENT BODY:', JSON.stringify(medicament))
     const response = await fetch(`${BASE_URL}/medicaments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(medicament),
     })
     if (!response.ok) {
+        if (response.status === 409) {
+            throw new Error('Un médicament avec ce nom existe déjà')
+        }
         const errorText = await response.text().catch(() => '')
-        console.log('ERREUR COMPLÈTE:', response.status, errorText)
         throw new Error(`Erreur ${response.status} : ${errorText || 'création impossible'}`)
     }
     return response.json()

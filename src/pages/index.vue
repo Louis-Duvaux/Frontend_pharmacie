@@ -160,7 +160,6 @@
   }
 
   async function handleSave (formData, isEditing) {
-    console.log('HANDLE SAVE CALLED', JSON.stringify(formData), 'isEditing:', isEditing)
     saving.value = true
     try {
       // Construire un payload propre avec uniquement les champs attendus
@@ -176,7 +175,6 @@
         imageURL: formData.imageURL || '',
         categorie: 'https://springajax.herokuapp.com/api/categories/1',
       }
-      console.log('PAYLOAD ENVOYÉ:', JSON.stringify(payload))
 
       if (isEditing) {
         await updateMedicament(formData.reference, payload)
