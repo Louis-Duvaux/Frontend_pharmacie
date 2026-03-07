@@ -1,17 +1,7 @@
-/**
- * plugins/vuetify.js
- *
- * Framework documentation: https://vuetifyjs.com
- */
-
-// Styles
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
-
-// Composables
 import { createVuetify } from 'vuetify'
 
-// Thème pharmacie : vert et blanc
 const pharmacieTheme = {
   dark: false,
   colors: {

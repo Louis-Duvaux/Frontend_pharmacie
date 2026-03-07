@@ -1,6 +1,5 @@
 <template>
   <v-container class="pa-4">
-    <!-- Titre et bouton ajouter -->
     <v-row align="center" class="mb-4">
       <v-col>
         <h1 class="text-h5 text-primary">Stock de médicaments</h1>
@@ -11,7 +10,6 @@
       </v-col>
     </v-row>
 
-    <!-- Recherche -->
     <v-row class="mb-4">
       <v-col cols="12" md="6">
         <v-text-field
@@ -24,19 +22,16 @@
       </v-col>
     </v-row>
 
-    <!-- Chargement -->
     <v-row v-if="loading" justify="center" class="my-8">
       <v-progress-circular indeterminate color="primary" />
     </v-row>
 
-    <!-- Aucun résultat -->
     <v-row v-else-if="filteredMedicaments.length === 0" justify="center" class="my-8">
       <v-col cols="12" class="text-center">
         <p class="text-grey">Aucun médicament trouvé.</p>
       </v-col>
     </v-row>
 
-    <!-- Grille de cartes -->
     <v-row v-else>
       <v-col
         v-for="med in filteredMedicaments"
@@ -58,7 +53,6 @@
 
 
 
-    <!-- Dialogue ajouter / modifier -->
     <MedicamentDialog
       v-model="dialogOpen"
       :medicament="selectedMedicament"
@@ -66,7 +60,6 @@
       @save="handleSave"
     />
 
-    <!-- Dialogue de confirmation de suppression -->
     <v-dialog v-model="deleteDialogOpen" max-width="400">
       <v-card>
         <v-card-title>Confirmer la suppression</v-card-title>
@@ -81,7 +74,6 @@
       </v-card>
     </v-dialog>
 
-    <!-- Message de notification -->
     <v-alert
       v-if="message.text"
       :type="message.type"
@@ -162,7 +154,6 @@
   async function handleSave (formData, isEditing) {
     saving.value = true
     try {
-      // Construire un payload propre avec uniquement les champs attendus
       const payload = {
         nom: formData.nom,
         quantiteParUnite: formData.quantiteParUnite,

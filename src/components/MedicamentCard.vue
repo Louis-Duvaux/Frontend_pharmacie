@@ -1,6 +1,5 @@
 <template>
   <v-card elevation="2">
-    <!-- Image du médicament -->
     <v-img
       :src="medicament.imageURL || 'https://via.placeholder.com/400x200?text=Médicament'"
       height="160"
@@ -21,7 +20,6 @@
 
     <v-divider />
 
-    <!-- Boutons +1 / -1 -->
     <v-card-actions class="justify-center">
       <v-btn
         color="warning"
@@ -45,7 +43,6 @@
 
     <v-divider />
 
-    <!-- Boutons modifier / supprimer -->
     <v-card-actions>
       <v-btn
         color="primary"
