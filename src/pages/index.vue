@@ -154,16 +154,9 @@
   async function handleSave (formData, isEditing) {
     saving.value = true
     try {
+      const { _links, _embedded, ...cleaned } = formData
       const payload = {
-        nom: formData.nom,
-        quantiteParUnite: formData.quantiteParUnite,
-        prixUnitaire: formData.prixUnitaire,
-        unitesEnStock: formData.unitesEnStock,
-        unitesCommandees: formData.unitesCommandees || 0,
-        niveauDeReappro: formData.niveauDeReappro,
-        fournisseur: formData.fournisseur,
-        indisponible: formData.indisponible || false,
-        imageURL: formData.imageURL || '',
+        ...cleaned,
         categorie: 'https://springajax.herokuapp.com/api/categories/1',
       }
 
