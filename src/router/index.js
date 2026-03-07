@@ -11,7 +11,7 @@ router.onError((err, to) => {
     if (localStorage.getItem('vuetify:dynamic-reload')) {
       console.error(err)
     } else {
-      localStorage.setItem('vuetify:dynamic-reload', 'true'
+      localStorage.setItem('vuetify:dynamic-reload', 'true')
       location.assign(to.fullPath)
     }
   } else {
